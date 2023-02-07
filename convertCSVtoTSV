@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jan 31 16:36:08 2023
+
+@author: brock
+"""
+
+import os
+import csv
+from csv import reader
+import pandas as pd
+
+fields = ['CDR3', 'Value'] 
+
+target = "TrainingData/train_data.csv"
+receptacle = "out/"
+f = os.path.join(target)
+if os.path.isfile(f):
+    print(f)
+    csv_reader = reader(open(target,"r"), delimiter=',', quotechar="\"") 
+    
+
+outFile = receptacle + "testing_data.tsv"
+
+with open(outFile, 'w') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter='\t')
+    csvwriter.writerow(fields)
+    for row in csv_reader:
+        if len(row) > 0 and row[0] != "CDR3" and row[0] != "":
+            csvwriter.writerow([row[0], row[1]])
